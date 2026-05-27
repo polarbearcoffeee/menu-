@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海熊咖啡 Polar Bear Cafe — Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --dark: #1A1410;
+    --brown: #5C3D2E;
+    --gold: #B8934A;
+    --mid: #8B6952;
+    --light-brown: #D4B896;
+    --navy: #1B2A4A;
+    --teal: #1E4D5C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background-color: var(--cream); color: var(--dark); font-family: 'Noto Serif TC', serif; min-height: 100vh; }
+
+  /* ── HERO ── */
+  .hero { background: var(--navy); color: var(--cream); text-align: center; padding: 60px 20px 50px; position: relative; overflow: hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 120%, rgba(184,147,74,.25) 0%, transparent 65%); pointer-events:none; }
+  .hero-bear { font-size:52px; margin-bottom:12px; display:block; animation:float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,7vw,4.2rem); font-weight:300; letter-spacing:.12em; line-height:1; margin-bottom:6px; }
+  .hero h1 span { color:var(--gold); font-style:italic; }
+  .hero-sub { font-weight:300; font-size:1rem; letter-spacing:.35em; color:var(--light-brown); margin-bottom:28px; }
+  .hero-divider { display:flex; align-items:center; justify-content:center; gap:14px; color:var(--gold); font-size:.7rem; letter-spacing:.2em; }
+  .hero-divider::before,.hero-divider::after { content:''; display:block; width:60px; height:1px; background:var(--gold); opacity:.6; }
+
+  /* ── NAV ── */
+  .nav-wrap { background:var(--dark); position:sticky; top:0; z-index:100; overflow-x:auto; scrollbar-width:none; }
+  .nav-wrap::-webkit-scrollbar { display:none; }
+  .nav { display:flex; min-width:max-content; padding:0 16px; }
+  .nav-btn { background:none; border:none; color:var(--light-brown); font-family:'Noto Serif TC',serif; font-size:.78rem; letter-spacing:.08em; padding:14px 18px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s,border-color .2s; }
+  .nav-btn.active,.nav-btn:hover { color:var(--gold); border-bottom-color:var(--gold); }
+
+  /* ── SECTIONS ── */
+  .section { display:none; padding:40px 20px 60px; max-width:680px; margin:0 auto; animation:fadeUp .4s ease; }
+  .section.active { display:block; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .section-header { text-align:center; margin-bottom:36px; }
+  .section-header .en { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; letter-spacing:.15em; color:var(--gold); font-style:italic; }
+  .section-header .zh { font-size:1rem; letter-spacing:.2em; color:var(--mid); margin-top:2px; }
+  .section-header .line { display:block; width:40px; height:1px; background:var(--gold); margin:12px auto 0; opacity:.5; }
+
+  /* ── CATEGORY / ITEM ── */
+  .cat-title { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; letter-spacing:.12em; color:var(--brown); text-transform:uppercase; border-bottom:1px solid var(--light-brown); padding-bottom:6px; margin:32px 0 16px; }
+  .cat-title .zh { font-size:.85rem; font-weight:400; margin-left:8px; color:var(--mid); font-family:'Noto Serif TC',serif; }
+  .item { display:flex; justify-content:space-between; align-items:baseline; padding:10px 0; border-bottom:1px dashed rgba(139,105,82,.2); gap:12px; }
+  .item:last-child { border-bottom:none; }
+  .item-name { flex:1; }
+  .item-name .zh { font-size:.95rem; font-weight:400; }
+  .item-name .en { display:block; font-family:'Cormorant Garamond',serif; font-size:.82rem; color:var(--mid); font-style:italic; letter-spacing:.05em; margin-top:1px; }
+  .item-price { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; color:var(--brown); white-space:nowrap; }
+
+  /* ── COMBO ── */
+  .combo-card { background:var(--navy); color:var(--cream); border-radius:12px; padding:22px 24px; margin-bottom:16px; position:relative; overflow:hidden; }
+  .combo-card::after { content:'🐻‍❄️'; position:absolute; right:16px; top:16px; font-size:28px; opacity:.18; }
+  .combo-card .combo-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; letter-spacing:.08em; color:var(--gold); margin-bottom:8px; }
+  .combo-card .combo-includes { font-size:.82rem; color:var(--light-brown); line-height:1.8; margin-bottom:12px; }
+  .combo-card .combo-price { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--cream); }
+  .combo-card .combo-price span { font-size:1rem; font-weight:300; }
+
+  /* ── ALCOHOL ── */
+  .alc-item { background:white; border:1px solid var(--light-brown); border-radius:10px; padding:16px 18px; margin-bottom:12px; }
+  .alc-item .alc-name { font-size:.98rem; font-weight:600; margin-bottom:4px; }
+  .alc-item .alc-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.85rem; color:var(--mid); margin-bottom:8px; }
+  .alc-item .alc-desc { font-size:.78rem; color:#666; line-height:1.6; margin-bottom:10px; }
+  .alc-prices { display:flex; gap:12px; flex-wrap:wrap; }
+  .alc-price-tag { background:var(--dark); color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:.88rem; padding:3px 10px; border-radius:20px; }
+  .alc-price-tag.glass { background:var(--teal); }
+  .alc-price-tag.bottle { background:var(--brown); }
+  .badge { display:inline-block; font-size:.65rem; background:var(--gold); color:white; padding:2px 7px; border-radius:20px; margin-left:6px; vertical-align:middle; }
+
+  /* ── FOOD ── */
+  .food-card { background:white; border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:14px 18px; margin-bottom:12px; }
+  .food-card .food-title { font-size:1rem; font-weight:600; margin-bottom:4px; }
+  .food-card .food-en { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.85rem; color:var(--mid); margin-bottom:8px; }
+  .food-card .food-note { font-size:.75rem; color:#888; margin-bottom:6px; }
+  .food-card .food-price { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:var(--brown); }
+
+  /* ── RULES ── */
+  .rules-card { background:white; border:1px solid var(--light-brown); border-radius:10px; padding:22px; margin-bottom:14px; }
+  .rules-card ul { list-style:none; }
+  .rules-card li { padding:9px 0 9px 22px; position:relative; font-size:.88rem; line-height:1.65; border-bottom:1px dashed rgba(139,105,82,.15); }
+  .rules-card li:last-child { border-bottom:none; }
+  .rules-card li::before { content:'▪'; position:absolute; left:0; color:var(--gold); font-size:.6rem; top:12px; }
+  .rules-card li .en-note { display:block; color:var(--mid); font-size:.78rem; font-family:'Cormorant Garamond',serif; font-style:italic; margin-top:2px; }
+  .wifi-card { background:var(--dark); color:var(--cream); border-radius:10px; padding:18px 22px; display:flex; align-items:center; gap:14px; margin-top:20px; }
+  .wifi-card .wifi-icon { font-size:2rem; }
+  .wifi-card .wifi-name { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold); font-weight:600; }
+  .wifi-card .wifi-pw { font-size:.9rem; }
+
+  /* ── QR TOOL ── */
+  #qr-section { background: #f0f4f8; }
+  .qr-wrap { max-width: 580px; margin: 0 auto; }
+  .qr-card { background: white; border-radius: 16px; padding: 28px 24px; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+  .qr-card h2 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--navy); margin-bottom:6px; }
+  .qr-card .qr-desc { font-size:.82rem; color:#666; line-height:1.7; margin-bottom:22px; }
+  .qr-input-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .qr-input { flex:1; min-width:200px; border:1.5px solid var(--light-brown); border-radius:8px; padding:10px 14px; font-size:.9rem; font-family:'Noto Serif TC',serif; outline:none; transition:border-color .2s; }
+  .qr-input:focus { border-color:var(--gold); }
+  .qr-btn { background:var(--navy); color:white; border:none; border-radius:8px; padding:10px 20px; font-family:'Noto Serif TC',serif; font-size:.88rem; cursor:pointer; transition:background .2s; white-space:nowrap; }
+  .qr-btn:hover { background:var(--brown); }
+  .qr-btn.dl { background:var(--teal); }
+  .qr-output { text-align:center; margin-top:20px; display:none; }
+  .qr-output #qrcode { display:inline-block; padding:16px; background:white; border:2px solid var(--light-brown); border-radius:12px; }
+  .qr-output .qr-url { font-size:.78rem; color:var(--mid); word-break:break-all; margin-top:10px; }
+  .qr-output .qr-actions { display:flex; justify-content:center; gap:12px; margin-top:16px; flex-wrap:wrap; }
+  .step-list { counter-reset:step; list-style:none; margin-top:10px; }
+  .step-list li { counter-increment:step; padding:8px 0 8px 36px; position:relative; font-size:.84rem; line-height:1.6; border-bottom:1px dashed rgba(139,105,82,.18); }
+  .step-list li:last-child { border-bottom:none; }
+  .step-list li::before { content:counter(step); position:absolute; left:0; top:8px; width:22px; height:22px; background:var(--navy); color:white; border-radius:50%; font-size:.7rem; display:flex; align-items:center; justify-content:center; font-weight:700; }
+  .step-list a { color:var(--teal); text-decoration:underline; }
+  .guide-toggle { background:none; border:1.5px solid var(--light-brown); border-radius:8px; padding:8px 16px; font-family:'Noto Serif TC',serif; font-size:.82rem; color:var(--mid); cursor:pointer; margin-bottom:14px; }
+  .guide-body { display:none; }
+  .guide-body.open { display:block; }
+  .platform-tabs { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .ptab { background:none; border:1.5px solid var(--light-brown); border-radius:6px; padding:5px 14px; font-size:.78rem; cursor:pointer; font-family:'Noto Serif TC',serif; color:var(--mid); transition:all .2s; }
+  .ptab.active { background:var(--navy); color:white; border-color:var(--navy); }
+  .ptab-content { display:none; }
+  .ptab-content.active { display:block; }
+  .note-box { background:#fffbe6; border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:12px 16px; font-size:.8rem; line-height:1.7; margin-top:14px; color:#555; }
+
+  /* ── FOOTER ── */
+  footer { text-align:center; padding:28px 20px; background:var(--dark); color:var(--mid); font-size:.78rem; letter-spacing:.1em; }
+  footer span { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-bear">🐻‍❄️</span>
+  <h1>海熊咖啡<br><span>Polar Bear Cafe</span></h1>
+  <p class="hero-sub">TAOYUAN · CAFÉ & BAR</p>
+  <div class="hero-divider">MENU</div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showTab('coffee',this)">☕ 咖啡</button>
+    <button class="nav-btn" onclick="showTab('nonalc',this)">🍵 非咖啡飲品</button>
+    <button class="nav-btn" onclick="showTab('dessert',this)">🍰 甜點</button>
+    <button class="nav-btn" onclick="showTab('combo',this)">🎁 套餐</button>
+    <button class="nav-btn" onclick="showTab('food',this)">🍛 餐食</button>
+    <button class="nav-btn" onclick="showTab('alcohol',this)">🍶 酒類</button>
+    <button class="nav-btn" onclick="showTab('info',this)">📋 須知</button>
+    <button class="nav-btn" onclick="showTab('qr-section',this)">📲 QR Code</button>
+  </nav>
+</div>
+
+<!-- COFFEE -->
+<section class="section active" id="coffee">
+  <div class="section-header"><div class="en">Coffee</div><div class="zh">咖 啡</div><span class="line"></span></div>
+  <div class="cat-title">POUR-OVER <span class="zh">單品手沖</span></div>
+  <div class="item"><div class="item-name"><div class="zh">哥倫比亞</div><span class="en">Colombia</span></div><div class="item-price">$180</div></div>
+  <div class="item"><div class="item-name"><div class="zh">耶珈雪菲</div><span class="en">Yirgacheffe</span></div><div class="item-price">$190</div></div>
+  <div class="item"><div class="item-name"><div class="zh">肯亞</div><span class="en">Kenya</span></div><div class="item-price">$200</div></div>
+  <div class="item"><div class="item-name"><div class="zh">黃金曼特寧</div><span class="en">Golden Mandheling</span></div><div class="item-price">$230</div></div>
+  <div class="cat-title">ESPRESSO-BASED <span class="zh">咖啡</span></div>
+  <div class="item"><div class="item-name"><div class="zh">義式濃縮</div><span class="en">Single Espresso</span></div><div class="item-price">$80</div></div>
+  <div class="item"><div class="item-name"><div class="zh">美式咖啡</div><span class="en">Americano</span></div><div class="item-price">$110</div></div>
+  <div class="item"><div class="item-name"><div class="zh">咖啡拿鐵</div><span class="en">Coffee Latte</span></div><div class="item-price">$130</div></div>
+  <div class="item"><div class="item-name"><div class="zh">卡布奇諾</div><span class="en">Cappuccino</span></div><div class="item-price">$130</div></div>
+  <div class="item"><div class="item-name"><div class="zh">焦糖拿鐵</div><span class="en">Caramel Latte</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">榛果拿鐵</div><span class="en">Hazelnut Latte</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">橘皮拿鐵</div><span class="en">Orange Peel Latte</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">摩卡</div><span class="en">Mocha</span></div><div class="item-price">$160</div></div>
+</section>
+
+<!-- NON-COFFEE -->
+<section class="section" id="nonalc">
+  <div class="section-header"><div class="en">Non-Coffee Drinks</div><div class="zh">非咖啡飲品</div><span class="line"></span></div>
+  <div class="cat-title">TEA LATTE <span class="zh">奶茶系列</span></div>
+  <div class="item"><div class="item-name"><div class="zh">極濃鮮奶茶</div><span class="en">Premium Strong Tea Latte</span></div><div class="item-price">$180</div></div>
+  <div class="item"><div class="item-name"><div class="zh">米香烏龍鮮奶茶</div><span class="en">Roasted Rice Oolong Tea Latte</span></div><div class="item-price">$180</div></div>
+  <div class="item"><div class="item-name"><div class="zh">老火鐵觀音鮮奶茶</div><span class="en">Tie Guan Yin Tea Latte</span></div><div class="item-price">$180</div></div>
+  <div class="cat-title">FLAVORED MILK FOAM <span class="zh">鮮奶奶泡系列</span></div>
+  <div class="item"><div class="item-name"><div class="zh">焦糖鮮奶奶泡</div><span class="en">Caramel</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">榛果鮮奶奶泡</div><span class="en">Hazelnut</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">橘皮鮮奶奶泡</div><span class="en">Orange Peel</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">香草鮮奶奶泡</div><span class="en">Vanilla</span></div><div class="item-price">$160</div></div>
+  <div class="cat-title">SELECTED TEA <span class="zh">特選茶</span></div>
+  <div class="item"><div class="item-name"><div class="zh">阿里山烏龍茶</div><span class="en">Oolong Tea</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">台灣綠茶</div><span class="en">Green Tea</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">皇家伯爵茶</div><span class="en">Earl Grey Tea</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">洋甘菊</div><span class="en">Chamomile Tea</span></div><div class="item-price">$160</div></div>
+  <div class="item"><div class="item-name"><div class="zh">薰衣草</div><span class="en">Lavender Tea</span></div><div class="item-price">$160</div></div>
+  <div class="cat-title">OTHERS <span class="zh">其他</span></div>
+  <div class="item"><div class="item-name"><div class="zh">可可歐蕾</div><span class="en">Chocolate Au Lait</span></div><div class="item-price">$180</div></div>
+  <div class="item"><div class="item-name"><div class="zh">抹茶歐蕾</div><span class="en">Matcha Au Lait</span></div><div class="item-price">$180</div></div>
+  <div class="cat-title">FRESH FRUIT JUICE <span class="zh">鮮果汁</span></div>
+  <div class="item"><div class="item-name"><div class="zh">柳橙汁</div><span class="en">Orange Juice</span></div><div class="item-price">$180</div></div>
+  <div class="item"><div class="item-name"><div class="zh">檸檬汁</div><span class="en">Lemon Juice</span></div><div class="item-price">$180</div></div>
+</section>
+
+<!-- DESSERT -->
+<section class="section" id="dessert">
+  <div class="section-header"><div class="en">Desserts</div><div class="zh">甜 點</div><span class="line"></span></div>
+  <div class="cat-title">MILLE-CREPE CAKE <span class="zh">千層蛋糕</span></div>
+  <div class="item"><div class="item-name"><div class="zh">原味經典</div><span class="en">Caramel</span></div><div class="item-price">$220</div></div>
+  <div class="item"><div class="item-name"><div class="zh">伯爵千層</div><span class="en">Earl Gray</span></div><div class="item-price">$240</div></div>
+  <div class="item"><div class="item-name"><div class="zh">巧克力千層</div><span class="en">Chocolate</span></div><div class="item-price">$250</div></div>
+  <div class="cat-title">DESSERTS <span class="zh">甜點</span></div>
+  <div class="item"><div class="item-name"><div class="zh">海鹽焦糖可頌鬆餅</div><span class="en">Salted Caramel Croffle</span></div><div class="item-price">$120</div></div>
+  <div class="item"><div class="item-name"><div class="zh">達克瓦茲</div><span class="en">Dacquoise（檸檬／百香果／開心果／咖啡）</span></div><div class="item-price">單顆 $85 / 兩顆 $160</div></div>
+</section>
+
+<!-- COMBO -->
+<section class="section" id="combo">
+  <div class="section-header"><div class="en">Set Combos</div><div class="zh">甜點套餐</div><span class="line"></span></div>
+  <div class="combo-card">
+    <div class="combo-title">單人甜點套餐</div>
+    <div class="combo-includes">✦ 千層蛋糕 Mille-Crepe Cake（任選一）<br>✦ 可頌鬆餅 Croffle（任選一）<br>✦ $160 飲品（任選一）</div>
+    <div class="combo-price"><span>NT$</span>299</div>
+  </div>
+  <div class="combo-card" style="background:var(--teal)">
+    <div class="combo-title">雙人套餐</div>
+    <div class="combo-includes">✦ 千層蛋糕 Mille-Crepe Cake（任選一）<br>✦ 可頌鬆餅 Croffle（任選二）<br>✦ 非酒精精緻飲品（任選二）</div>
+    <div class="combo-price"><span>NT$</span>499</div>
+  </div>
+  <div class="combo-card" style="background:var(--brown)">
+    <div class="combo-title">四人套餐</div>
+    <div class="combo-includes">✦ 千層蛋糕 Mille-Crepe Cake（任選二）<br>✦ 可頌鬆餅 Croffle（任選二）<br>✦ 非酒精精緻飲品（任選四）</div>
+    <div class="combo-price"><span>NT$</span>999</div>
+  </div>
+</section>
+
+<!-- FOOD -->
+<section class="section" id="food">
+  <div class="section-header"><div class="en">Food</div><div class="zh">餐 食</div><span class="line"></span></div>
+  <div class="food-card"><div class="food-title">泰式綠咖哩雞肉飯</div><div class="food-en">Thai Green Curry Chicken Rice</div><div class="food-note">含 $160 飲品｜搭甜品折 $30</div><div class="food-price">$270</div></div>
+  <div class="food-card"><div class="food-title">日式牛肉蜂蜜咖哩飯</div><div class="food-en">Japanese Beef Honey Curry Rice</div><div class="food-note">含 $160 飲品｜搭甜品折 $30</div><div class="food-price">$270</div></div>
+  <div class="food-card"><div class="food-title">水餃</div><div class="food-en">Dumplings</div><div class="food-price">$100</div></div>
+  <div class="food-card"><div class="food-title">酥炸鱈魚香絲</div><div class="food-en">Crispy Fried Cod Strips</div><div class="food-price">$100</div></div>
+</section>
+
+<!-- ALCOHOL -->
+<section class="section" id="alcohol">
+  <div class="section-header"><div class="en">Spirits & Wine</div><div class="zh">酒 類</div><span class="line"></span></div>
+  <div class="item" style="padding:6px 0 14px;font-size:.78rem;color:var(--mid);border-bottom:1px solid var(--light-brown);">⚠️ 酒後不開車，安全有保障</div>
+  <div class="cat-title">梅酒・果酒 JAPANESE FRUIT WINES</div>
+  <div class="alc-item">
+    <div class="alc-name">神山之梅酒 <span class="badge">德島縣</span></div>
+    <div class="alc-sub">Kamiyama no Umeshu — 三年古酒原酒｜17%</div>
+    <div class="alc-desc">嚴選德島神山町100%梅實，熟成3年，蜜豐、濃郁醇厚</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$280 / 杯</span><span class="alc-price-tag bottle">$2,000 / 瓶</span></div>
+  </div>
+  <div class="alc-item">
+    <div class="alc-name">攬野小町柚子酒 <span class="badge">岩手縣</span></div>
+    <div class="alc-sub">Komachi Yuzu Wine｜8%</div>
+    <div class="alc-desc">使用高知縣100%柚子，天然清新，充滿了清爽的果汁感</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$250 / 杯</span><span class="alc-price-tag bottle">$1,800 / 瓶</span></div>
+  </div>
+  <div class="alc-item">
+    <div class="alc-name">初露草莓酒 <span class="badge">德島縣</span></div>
+    <div class="alc-sub">Hatsushimo Strawberry Liqueur｜10%</div>
+    <div class="alc-desc">嚴選草莓自然萃取，不添加其他果肉，釀成酒體，濃郁爽口</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$250 / 杯</span><span class="alc-price-tag bottle">$1,800 / 瓶</span></div>
+  </div>
+  <div class="alc-item">
+    <div class="alc-name">金崎和紅茶酒 <span class="badge">岩手縣</span></div>
+    <div class="alc-sub">Kanezaki Japanese Black Tea Wine｜18%</div>
+    <div class="alc-desc">以「紅富貴」發酵自然的屋久島茶園手製紅茶酒，花蜜氣味，帶生黑糖純粹</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$280 / 杯</span><span class="alc-price-tag bottle">$2,300 / 瓶</span></div>
+  </div>
+  <div class="cat-title">特調 SPECIALS</div>
+  <div class="alc-item">
+    <div class="alc-name">草莓優格酒 <span class="badge">德島縣</span></div>
+    <div class="alc-sub">Strawberry Yogurt Liqueur｜8%</div>
+    <div class="alc-desc">使用超過60%原味優格，濃郁乳製作，清爽滑順（初露草莓酒 + 優格奶酒）</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$300 / 杯</span></div>
+  </div>
+  <div class="alc-item" style="border:2px dashed var(--gold)">
+    <div class="alc-name">生啤 🍺</div>
+    <div class="alc-prices"><span class="alc-price-tag glass">$200 / 杯</span></div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="section" id="info">
+  <div class="section-header"><div class="en">House Rules</div><div class="zh">消費須知</div><span class="line"></span></div>
+  <div class="rules-card">
+    <ul>
+      <li>每人最低消費 $150，含一杯飲品<span class="en-note">Minimum charge is $150 per person (includes one drink).</span></li>
+      <li>不分時段限時 2 小時，以第一位入座時間計算<span class="en-note">Seating time is limited to 2 hours, calculated from the arrival time of the first guest.</span></li>
+      <li>飲品續杯 7.5 折，可延時 3 小時（優惠組合、酒品除外）<span class="en-note">Enjoy 25% off on drink refills to extend your stay up to 3 additional hours. Promotional combos and alcoholic beverages are excluded.</span></li>
+      <li>禁止攜帶外食、飲料<span class="en-note">Outside food and beverages are not permitted.</span></li>
+      <li>店內交談請留意音量，以免影響他人<span class="en-note">Please keep your voice down and be considerate of other guests.</span></li>
+      <li>打破餐具、杯子酌收 $100 清潔費<span class="en-note">A cleaning fee of $100 will be charged for any broken tableware or glasses.</span></li>
+      <li>可使用現金、LINE Pay、街口支付、JKoPay<span class="en-note">We accept cash, Line Pay, and JKoPay.</span></li>
+    </ul>
+  </div>
+  <div class="wifi-card">
+    <div class="wifi-icon">📶</div>
+    <div class="wifi-info">
+      <div class="wifi-name">Wi-Fi：海熊咖啡</div>
+      <div class="wifi-pw">Password：<strong>77889978</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- QR CODE TOOL -->
+<section class="section" id="qr-section">
+  <div class="section-header"><div class="en">QR Code Generator</div><div class="zh">產生 QR Code</div><span class="line"></span></div>
+  <div class="qr-wrap">
+
+    <!-- STEP 1: Upload guide -->
+    <div class="qr-card" style="margin-bottom:16px;">
+      <h2>① 先把菜單上傳到網路</h2>
+      <p class="qr-desc">QR Code 需要一個「公開網址」才能讓客人掃描。<br>推薦免費平台，30 秒就能完成。</p>
+      <button class="guide-toggle" onclick="toggleGuide()">📖 展開上傳教學</button>
+      <div class="guide-body" id="guide-body">
+        <div class="platform-tabs">
+          <button class="ptab active" onclick="switchPlatform('netlify',this)">Netlify Drop（最簡單）</button>
+          <button class="ptab" onclick="switchPlatform('github',this)">GitHub Pages</button>
+        </div>
+        <!-- Netlify -->
+        <div class="ptab-content active" id="pt-netlify">
+          <ol class="step-list">
+            <li>用電腦打開 <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a>（不需要帳號）</li>
+            <li>把這個 <strong>polar_bear_cafe_menu.html</strong> 檔案重新命名為 <strong>index.html</strong></li>
+            <li>直接把 index.html 拖曳到網頁中間的虛線框</li>
+            <li>等幾秒，畫面會出現一串網址，例如：<br><code style="font-size:.78rem;background:#f4f4f4;padding:2px 6px;border-radius:4px;">https://lively-unicorn-abc123.netlify.app</code></li>
+            <li>複製那串網址，貼到下方的輸入框，產生 QR Code ✅</li>
+          </ol>
+          <div class="note-box">💡 免費版網址帶有隨機英文字，想要自訂網址（如 polar-bear-cafe.netlify.app）需要免費註冊帳號後可修改。</div>
+        </div>
+        <!-- GitHub -->
+        <div class="ptab-content" id="pt-github">
+          <ol class="step-list">
+            <li>前往 <a href="https://github.com" target="_blank">github.com</a> 免費註冊帳號</li>
+            <li>點右上角 ＋ → New repository，名稱填 <strong>menu</strong>，勾選 Public，按 Create</li>
+            <li>點 Add file → Upload files，上傳 <strong>index.html</strong>（先把檔案改名）</li>
+            <li>進入 Settings → Pages → Branch 選 main → Save</li>
+            <li>等約 1 分鐘，網址會是：<br><code style="font-size:.78rem;background:#f4f4f4;padding:2px 6px;border-radius:4px;">https://你的帳號.github.io/menu</code></li>
+            <li>複製網址，貼到下方，產生 QR Code ✅</li>
+          </ol>
+          <div class="note-box">💡 GitHub Pages 是最穩定的長期方案，完全免費且網址固定。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: QR generator -->
+    <div class="qr-card">
+      <h2>② 貼入網址，產生 QR Code</h2>
+      <p class="qr-desc">上傳完成後，把網址貼在下方，即時產生可直接印出的 QR Code。</p>
+      <div class="qr-input-row">
+        <input class="qr-input" id="qr-url" type="url" placeholder="https://your-site.netlify.app" />
+        <button class="qr-btn" onclick="generateQR()">產生 QR Code</button>
+      </div>
+      <div class="qr-output" id="qr-output">
+        <div id="qrcode"></div>
+        <p class="qr-url" id="qr-url-display"></p>
+        <div class="qr-actions">
+          <button class="qr-btn dl" onclick="downloadQR()">⬇ 下載 QR Code（PNG）</button>
+        </div>
+        <div class="note-box" style="text-align:left;margin-top:16px;">✅ 掃描後直接在手機瀏覽器開啟菜單，不需要下載 App。<br>🖨 建議列印尺寸：5cm × 5cm 以上，確保掃描順暢。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>🐻‍❄️ <span>海熊咖啡 Polar Bear Cafe</span></p>
+  <p style="margin-top:6px;">訂位・包場 請洽 <span>0958-341-395</span></p>
+</footer>
+
+<script>
+  // Tab switching
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop - 1, behavior: 'smooth' });
+  }
+
+  // Upload guide toggle
+  function toggleGuide() {
+    const body = document.getElementById('guide-body');
+    body.classList.toggle('open');
+    document.querySelector('.guide-toggle').textContent =
+      body.classList.contains('open') ? '▲ 收起教學' : '📖 展開上傳教學';
+  }
+
+  // Platform tab
+  function switchPlatform(id, btn) {
+    document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ptab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pt-' + id).classList.add('active');
+  }
+
+  // QR Code generation
+  let qrInstance = null;
+  function generateQR() {
+    const url = document.getElementById('qr-url').value.trim();
+    if (!url) { alert('請先填入網址'); return; }
+    if (!url.startsWith('http')) { alert('請輸入完整網址（需以 https:// 開頭）'); return; }
+
+    const container = document.getElementById('qrcode');
+    container.innerHTML = '';
+    if (qrInstance) { qrInstance = null; }
+
+    qrInstance = new QRCode(container, {
+      text: url,
+      width: 220,
+      height: 220,
+      colorDark: '#1A1410',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    document.getElementById('qr-url-display').textContent = url;
+    document.getElementById('qr-output').style.display = 'block';
+  }
+
+  function downloadQR() {
+    const canvas = document.querySelector('#qrcode canvas');
+    if (!canvas) { alert('請先產生 QR Code'); return; }
+
+    // Add white padding for print
+    const pad = 20;
+    const out = document.createElement('canvas');
+    out.width = canvas.width + pad * 2;
+    out.height = canvas.height + pad * 2;
+    const ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, out.width, out.height);
+    ctx.drawImage(canvas, pad, pad);
+
+    const a = document.createElement('a');
+    a.download = 'polar_bear_cafe_qrcode.png';
+    a.href = out.toDataURL('image/png');
+    a.click();
+  }
+</script>
+</body>
+</html>
