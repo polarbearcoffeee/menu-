@@ -151,7 +151,7 @@
     <button class="nav-btn" onclick="showTab('food',this)">🍛 餐食</button>
     <button class="nav-btn" onclick="showTab('alcohol',this)">🍶 酒類</button>
     <button class="nav-btn" onclick="showTab('info',this)">📋 須知</button>
-    <button class="nav-btn" onclick="showTab('qr-section',this)">📲 QR Code</button>
+
   </nav>
 </div>
 
@@ -306,66 +306,7 @@
   </div>
 </section>
 
-<!-- QR CODE TOOL -->
-<section class="section" id="qr-section">
-  <div class="section-header"><div class="en">QR Code Generator</div><div class="zh">產生 QR Code</div><span class="line"></span></div>
-  <div class="qr-wrap">
 
-    <!-- STEP 1: Upload guide -->
-    <div class="qr-card" style="margin-bottom:16px;">
-      <h2>① 先把菜單上傳到網路</h2>
-      <p class="qr-desc">QR Code 需要一個「公開網址」才能讓客人掃描。<br>推薦免費平台，30 秒就能完成。</p>
-      <button class="guide-toggle" onclick="toggleGuide()">📖 展開上傳教學</button>
-      <div class="guide-body" id="guide-body">
-        <div class="platform-tabs">
-          <button class="ptab active" onclick="switchPlatform('netlify',this)">Netlify Drop（最簡單）</button>
-          <button class="ptab" onclick="switchPlatform('github',this)">GitHub Pages</button>
-        </div>
-        <!-- Netlify -->
-        <div class="ptab-content active" id="pt-netlify">
-          <ol class="step-list">
-            <li>用電腦打開 <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a>（不需要帳號）</li>
-            <li>把這個 <strong>polar_bear_cafe_menu.html</strong> 檔案重新命名為 <strong>index.html</strong></li>
-            <li>直接把 index.html 拖曳到網頁中間的虛線框</li>
-            <li>等幾秒，畫面會出現一串網址，例如：<br><code style="font-size:.78rem;background:#f4f4f4;padding:2px 6px;border-radius:4px;">https://lively-unicorn-abc123.netlify.app</code></li>
-            <li>複製那串網址，貼到下方的輸入框，產生 QR Code ✅</li>
-          </ol>
-          <div class="note-box">💡 免費版網址帶有隨機英文字，想要自訂網址（如 polar-bear-cafe.netlify.app）需要免費註冊帳號後可修改。</div>
-        </div>
-        <!-- GitHub -->
-        <div class="ptab-content" id="pt-github">
-          <ol class="step-list">
-            <li>前往 <a href="https://github.com" target="_blank">github.com</a> 免費註冊帳號</li>
-            <li>點右上角 ＋ → New repository，名稱填 <strong>menu</strong>，勾選 Public，按 Create</li>
-            <li>點 Add file → Upload files，上傳 <strong>index.html</strong>（先把檔案改名）</li>
-            <li>進入 Settings → Pages → Branch 選 main → Save</li>
-            <li>等約 1 分鐘，網址會是：<br><code style="font-size:.78rem;background:#f4f4f4;padding:2px 6px;border-radius:4px;">https://你的帳號.github.io/menu</code></li>
-            <li>複製網址，貼到下方，產生 QR Code ✅</li>
-          </ol>
-          <div class="note-box">💡 GitHub Pages 是最穩定的長期方案，完全免費且網址固定。</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 2: QR generator -->
-    <div class="qr-card">
-      <h2>② 貼入網址，產生 QR Code</h2>
-      <p class="qr-desc">上傳完成後，把網址貼在下方，即時產生可直接印出的 QR Code。</p>
-      <div class="qr-input-row">
-        <input class="qr-input" id="qr-url" type="url" placeholder="https://your-site.netlify.app" />
-        <button class="qr-btn" onclick="generateQR()">產生 QR Code</button>
-      </div>
-      <div class="qr-output" id="qr-output">
-        <div id="qrcode"></div>
-        <p class="qr-url" id="qr-url-display"></p>
-        <div class="qr-actions">
-          <button class="qr-btn dl" onclick="downloadQR()">⬇ 下載 QR Code（PNG）</button>
-        </div>
-        <div class="note-box" style="text-align:left;margin-top:16px;">✅ 掃描後直接在手機瀏覽器開啟菜單，不需要下載 App。<br>🖨 建議列印尺寸：5cm × 5cm 以上，確保掃描順暢。</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <p>🐻‍❄️ <span>海熊咖啡 Polar Bear Cafe</span></p>
