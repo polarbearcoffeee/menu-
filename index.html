@@ -144,20 +144,19 @@
 <!-- NAV -->
 <div class="nav-wrap">
   <nav class="nav">
-    <button class="nav-btn active" onclick="showTab('coffee',this)">☕ 咖啡</button>
+    <button class="nav-btn active" onclick="showTab('alcohol',this)">🍶 酒類</button>
+    <button class="nav-btn" onclick="showTab('cocktail',this)">🍸 調酒</button>
+    <button class="nav-btn" onclick="showTab('coffee',this)">☕ 咖啡</button>
     <button class="nav-btn" onclick="showTab('nonalc',this)">🍵 非咖啡飲品</button>
     <button class="nav-btn" onclick="showTab('dessert',this)">🍰 甜點</button>
     <button class="nav-btn" onclick="showTab('combo',this)">🎁 套餐</button>
     <button class="nav-btn" onclick="showTab('food',this)">🍛 餐食</button>
-    <button class="nav-btn" onclick="showTab('alcohol',this)">🍶 酒類</button>
-    <button class="nav-btn" onclick="showTab('cocktail',this)">🍸 調酒</button>
     <button class="nav-btn" onclick="showTab('info',this)">📋 須知</button>
-
   </nav>
 </div>
 
 <!-- COFFEE -->
-<section class="section active" id="coffee">
+<section class="section" id="coffee">
   <div class="section-header"><div class="en">Coffee</div><div class="zh">咖 啡</div><span class="line"></span></div>
   <div class="cat-title">POUR-OVER <span class="zh">單品手沖</span></div>
   <div class="item"><div class="item-name"><div class="zh">哥倫比亞</div><span class="en">Colombia</span></div><div class="item-price">$180</div></div>
@@ -254,7 +253,7 @@
 </section>
 
 <!-- ALCOHOL -->
-<section class="section" id="alcohol">
+<section class="section active" id="alcohol">
   <div class="section-header"><div class="en">Spirits & Wine</div><div class="zh">酒 類</div><span class="line"></span></div>
   <div class="item" style="padding:6px 0 14px;font-size:.78rem;color:var(--mid);border-bottom:1px solid var(--light-brown);">⚠️ 酒後不開車，安全有保障</div>
   <div class="cat-title">梅酒・果酒 JAPANESE FRUIT WINES</div>
@@ -298,17 +297,8 @@
 <!-- COCKTAIL -->
 <section class="section" id="cocktail">
   <div class="section-header"><div class="en">Cocktails</div><div class="zh">調 酒</div><span class="line"></span></div>
-
-  <div style="text-align:center; padding:80px 20px;">
-    <div style="font-size:64px; margin-bottom:20px; opacity:0.4;">🍸</div>
-    <div style="font-family:'Cormorant Garamond',serif; font-size:2rem; font-style:italic; color:var(--gold); letter-spacing:0.15em; margin-bottom:12px;">Coming Soon</div>
-    <div style="font-size:1.1rem; color:var(--mid); letter-spacing:0.3em; margin-bottom:24px;">敬 請 期 待</div>
-    <div style="width:60px; height:1px; background:var(--gold); margin:0 auto 24px; opacity:0.5;"></div>
-    <div style="font-size:0.85rem; color:var(--mid); line-height:1.8; max-width:340px; margin:0 auto;">
-      我們正在調製屬於海熊咖啡的<br>獨家調酒系列<br>
-      <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.85rem; color:var(--light-brown); display:block; margin-top:8px;">Signature cocktails are on the way</span>
-    </div>
-  </div>
+  <div class="item"><div class="item-name"><div class="zh">高球</div><span class="en">Highball</span></div><div class="item-price">$220</div></div>
+  <div class="item"><div class="item-name"><div class="zh">威士忌可樂</div><span class="en">Whisky &amp; Cola</span></div><div class="item-price">$220</div></div>
 </section>
 
 <!-- INFO -->
